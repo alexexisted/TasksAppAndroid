@@ -39,11 +39,13 @@ class TaskFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         val adapter = TaskItemAdapter()
+        //tasksList is a component of recycler view
         binding.tasksList.adapter = adapter
 
         viewModel.tasks.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                //передаем новые данные в бекап(резервный) список адаптера
+                adapter.submitList(it)
             }
         })
 

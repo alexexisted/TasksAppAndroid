@@ -11,7 +11,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.ListAdapter
 import com.alexadiamant.tasksapp.databinding.TaskItemBinding
 
-class TaskItemAdapter: ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(TaskDiffItemCallback()) {
+//adapter is getting the lambda function
+class TaskItemAdapter(val clickListener: (taskId: Long) -> Unit): ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(TaskDiffItemCallback()) {
 
 //no need to notify 'bout all changes because we use ListAdapter, and it contains the copy of list to find changes
 //    var data = listOf<Task>()
@@ -32,7 +33,7 @@ class TaskItemAdapter: ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(Tas
     //взывается каждый раз когда представление с переработкой должно отобразить данные элемента
     override fun onBindViewHolder(holder: TaskItemViewHolder, position: Int){
         val item = getItem(position) //getting the element from backup list from adapter
-        holder.bind(item)
+        holder.bind(item, clickListener) //lambda also in bind method
     }
 
     //определяте держатель представления
@@ -49,13 +50,14 @@ class TaskItemAdapter: ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(Tas
             }
         }
 
-        //данные добавляются в макет держател представления
-        fun bind(item: Task){
+        //данные добавляются в макет держатель представления
+        fun bind(item: Task, clickListener: (taskId: Long) -> Unit){
             binding.task = item
+            //setting click listener to catch taps on elements
+            //after click on element lambda-method is doing something
             binding.root.setOnClickListener{
-                TODO()
+                clickListener(item.taskId)
             }
         }
-
     }
 }

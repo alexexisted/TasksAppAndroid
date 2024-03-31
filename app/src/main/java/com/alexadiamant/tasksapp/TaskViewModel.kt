@@ -2,6 +2,7 @@ package com.alexadiamant.tasksapp
 
 import android.service.autofill.Transformation
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.map
@@ -11,6 +12,10 @@ import kotlinx.coroutines.launch
 class TaskViewModel(val dao: TaskDao): ViewModel() {
     //variable for name of the task
     var newTaskName: String = ""
+
+    private val _navigateToTask = MutableLiveData<Long?>()
+    val navigateToTask: LiveData<Long?>
+        get() = _navigateToTask
 
     val tasks = dao.getAll()
 //    val tasksString = tasks.map{
@@ -28,6 +33,14 @@ class TaskViewModel(val dao: TaskDao): ViewModel() {
             //use insert method to add name to db
             dao.insert(task)
         }
+    }
+
+    fun onTaskClicked(taskId: Long){
+        _navigateToTask.value = taskId
+    }
+
+    fun onTaskNavigated(){
+        _navigateToTask.value = null
     }
 
 //    fun formatTasks(tasks: List<Task>): String {

@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt") version "1.9.23"
+    id("androidx.navigation.safeargs.kotlin")
 //    id("org.jetbrains.kotlin.kapt") version "2.0.0-Beta5"
 }
 
@@ -42,6 +43,7 @@ android {
 dependencies {
     val room_version = "2.6.1"
     val lifecycle_version = "2.7.0"
+    val nav_version = "2.7.7"
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
@@ -52,6 +54,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
